@@ -93,8 +93,14 @@ namespace MVC5Exercise2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[HandleError(View = "Error")]
+        [HandleError(ExceptionType = typeof(Exception), View = "Error")]
+        // 參考：Exception or Error Handling in ASP.Net MVC Using HandleError Attribute
+        // http://www.c-sharpcorner.com/UploadFile/ff2f08/exception-or-error-handling-in-Asp-Net-mvc-using-handleerror/
         public ActionResult Create([Bind(Include = "Id,客戶名稱,統一編號,電話,傳真,地址,Email,是否已刪除,客戶分類")] 客戶資料 客戶資料)
         {
+            throw new Exception("故意製造一個錯誤，請忽略!!!");
+
             if (ModelState.IsValid)
             {
                 //db.客戶資料.Add(客戶資料);
