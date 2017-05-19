@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.客戶名稱, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.客戶名稱, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayFor(model => model.客戶名稱, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.客戶名稱, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.統一編號, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.統一編號, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayFor(model => model.統一編號, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.統一編號, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -69,7 +69,7 @@
             @Html.LabelFor(model => model.是否已刪除, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.是否已刪除)
+                    @Html.DisplayFor(model => model.是否已刪除)
                     @Html.ValidationMessageFor(model => model.是否已刪除, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -78,7 +78,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.客戶分類, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.客戶分類, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayFor(model => model.客戶分類, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.客戶分類, "", new { @class = "text-danger" })
             </div>
         </div>

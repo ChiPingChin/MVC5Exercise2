@@ -136,11 +136,8 @@ namespace MVC5Exercise2.Controllers
         public ActionResult Edit(int id, FormCollection form)
         {
             客戶資料 客戶資料 = repo.Get單筆客戶資料ByClientId(id);
-            if (TryUpdateModel(客戶資料,new string[] { "客戶名稱", "統一編號", "電話", "傳真", "地址", "Email", "客戶分類" }))
+            if (TryUpdateModel(客戶資料,new string[] { "密碼", "電話", "傳真", "地址", "Email" }))
             {
-                // db.Entry(客戶資料).State = EntityState.Modified;
-                // db.SaveChanges();
-                
                 repo.UnitOfWork.Commit();
 
                 return RedirectToAction("Index");
