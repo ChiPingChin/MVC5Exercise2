@@ -138,7 +138,7 @@ namespace MVC5Exercise2.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             //客戶資料 客戶資料 = db.客戶資料.Find(id);
-            客戶資料 客戶資料 = repo.Get單筆客戶資料ByClientId(id.Value);
+            客戶資料 客戶資料 = repo.Get單筆客戶資料ByClientId(id);
 
             //db.客戶資料.Remove(客戶資料);
             //db.SaveChanges();
