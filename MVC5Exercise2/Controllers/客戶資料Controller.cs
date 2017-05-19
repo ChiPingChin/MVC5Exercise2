@@ -99,7 +99,7 @@ namespace MVC5Exercise2.Controllers
         // http://www.c-sharpcorner.com/UploadFile/ff2f08/exception-or-error-handling-in-Asp-Net-mvc-using-handleerror/
         public ActionResult Create([Bind(Include = "Id,客戶名稱,統一編號,電話,傳真,地址,Email,是否已刪除,客戶分類")] 客戶資料 客戶資料)
         {
-            throw new Exception("故意製造一個錯誤，請忽略!!!");
+            // throw new Exception("故意製造一個錯誤，請忽略!!!");
 
             if (ModelState.IsValid)
             {
