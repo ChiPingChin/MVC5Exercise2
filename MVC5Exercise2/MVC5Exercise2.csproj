@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\客戶資料Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -331,6 +332,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\客戶資料\Create.cshtml" />
+    <Content Include="Views\客戶資料\Delete.cshtml" />
+    <Content Include="Views\客戶資料\Details.cshtml" />
+    <Content Include="Views\客戶資料\Edit.cshtml" />
+    <Content Include="Views\客戶資料\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
