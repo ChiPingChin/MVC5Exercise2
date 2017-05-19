@@ -65,6 +65,17 @@ namespace MVC5Exercise2.Controllers
             return View(data.ToList());
         }
 
+        /// <summary>
+        /// 後端回傳 Json 格式資料
+        /// Json Parse 網址：http://json.parser.online.fr/  
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetJson()
+        {
+            repo.UnitOfWork.Context.Configuration.LazyLoadingEnabled = false;
+            return Json(repo.Get列表所有客戶資料().Take(3), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: 客戶資料/Details/5
         public ActionResult Details(int? id)
         {
