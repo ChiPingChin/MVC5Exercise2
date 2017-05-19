@@ -4,7 +4,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>客戶資料</h2>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>查詢客戶資料</legend>
+        @Html.Label("客戶分類")
+        @Html.DropDownList("客戶分類"
+          , new List<SelectListItem> {
+              new SelectListItem() {Text= "資訊服務類", Value= "資訊服務類" },
+              new SelectListItem() {Text= "金融類", Value= "金融類" },
+              new SelectListItem() {Text= "製造類", Value= "製造類" },
+              new SelectListItem() {Text= "農林漁牧類", Value= "農林漁牧類" },
+              new SelectListItem() {Text= "銷售服務類", Value= "銷售服務類" }
+          })
+
+        <input type="submit" value="查詢" />
+    </fieldset>    
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
