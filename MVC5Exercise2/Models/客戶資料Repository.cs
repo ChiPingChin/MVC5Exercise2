@@ -17,6 +17,11 @@ namespace MVC5Exercise2.Models
             return this.All().FirstOrDefault(c => c.Id == id);
         }
 
+        public IQueryable<客戶資料> Get單筆客戶資料By客戶類別(string customerType)
+        {
+            return this.All().Where(c => c.客戶分類.ToUpper() == customerType.Trim().ToUpper());
+        }
+
         public IQueryable<客戶資料> Get列表所有客戶資料(bool showAll = false)
         {
             IQueryable<客戶資料> all = this.All();
