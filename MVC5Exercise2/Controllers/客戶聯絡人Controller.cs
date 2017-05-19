@@ -16,7 +16,7 @@ namespace MVC5Exercise2.Controllers
 
         // GET: 客戶聯絡人 
         public ActionResult Index(string 職稱 = "")
-        {
+        {     
             IEnumerable<客戶聯絡人> data = null;
             if (string.IsNullOrEmpty(職稱))
             {
@@ -26,10 +26,7 @@ namespace MVC5Exercise2.Controllers
             {
                 data = db.客戶聯絡人.Where(c => c.職稱.ToUpper() == 職稱.ToUpper()).Include(c => c.客戶資料);
             }
-
-            //var 客戶聯絡人 = db.客戶聯絡人.Include(客 => 客.客戶資料);
-            //return View(客戶聯絡人.ToList());
-
+            
             return View(data.ToList());
         }
 

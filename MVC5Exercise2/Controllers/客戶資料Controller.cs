@@ -16,7 +16,18 @@ namespace MVC5Exercise2.Controllers
         客戶資料Repository repo = RepositoryHelper.Get客戶資料Repository();
 
         // GET: 客戶資料
-        public ActionResult Index(string 客戶分類 = "")
+        /// <summary>
+        /// 排序、搜尋與分頁(後端作法參考網址)
+        // https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
+        // http://www.aizhengli.com/entity-framework6-mvc5-started/111/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application.html
+        // 排序、搜尋與分頁(前端作法參考網址) ASP.NET MVC 使用 jQuery EasyUI DataGrid -排序(Sorting)
+        // http://kevintsengtw.blogspot.tw/2013/10/aspnet-mvc-jquery-easyui-datagrid_9.html
+        // http://kevintsengtw.blogspot.tw/2013/10/aspnet-mvc-jquery-easyui-datagrid_10.html
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="客戶分類"></param>
+        /// <returns></returns>
+        public ActionResult Index(string sortOrder, string 客戶分類 = "")
         {
             IQueryable<客戶資料> data = null;
             if (string.IsNullOrEmpty(客戶分類))
@@ -27,8 +38,31 @@ namespace MVC5Exercise2.Controllers
             {
                 data = repo.Get列表所有客戶資料()
                     .Where(c => c.客戶分類.ToUpper() == 客戶分類.ToUpper());
-            }            
-            return View(data);
+            }
+            
+            // *** 實作排序功能(點選同一欄位切換下一次搜尋條件，回傳給 View 紀錄下來) Begin ***
+            // 先實作2個欄位排序：客戶名稱 & 統一編號
+            ViewBag.CNameSortParm = String.IsNullOrEmpty(sortOrder) ? "cname_desc" : "";
+            ViewBag.CNumberSortParm = sortOrder == "cnumber" ? "cnumber_desc" : "cnumber";
+
+            switch (sortOrder)
+            {
+                case "cname_desc":
+                    data = data.OrderByDescending(c => c.客戶名稱);
+                    break;
+                case "cnumber":
+                    data = data.OrderBy(c => c.統一編號);
+                    break;
+                case "cnumber_desc":
+                    data = data.OrderByDescending(c => c.統一編號);
+                    break;
+                default:
+                    data = data.OrderBy(c => c.客戶名稱);
+                    break;
+            }
+            // *** 實作排序功能(點選同一欄位切換下一次搜尋條件，回傳給 View 紀錄下來) Begin ***
+
+            return View(data.ToList());
         }
 
         // GET: 客戶資料/Details/5

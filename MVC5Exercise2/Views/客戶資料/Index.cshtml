@@ -30,10 +30,14 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.客戶名稱)
+            @*@Html.DisplayNameFor(model => model.客戶名稱)*@
+            @*增加排序欄位*@
+            @Html.ActionLink("客戶名稱", "Index", new { sortOrder = ViewBag.CNameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.統一編號)
+            @*@Html.DisplayNameFor(model => model.統一編號)*@
+            @*增加排序欄位*@
+            @Html.ActionLink("統一編號", "Index", new { sortOrder = ViewBag.CNumberSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.電話)
