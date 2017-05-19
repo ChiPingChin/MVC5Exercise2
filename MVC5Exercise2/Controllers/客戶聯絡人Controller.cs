@@ -14,7 +14,7 @@ namespace MVC5Exercise2.Controllers
     {
         private CustomerEntities db = new CustomerEntities();
 
-        // GET: 客戶聯絡人
+        // GET: 客戶聯絡人 
         public ActionResult Index(string 職稱 = "")
         {
             IEnumerable<客戶聯絡人> data = null;
