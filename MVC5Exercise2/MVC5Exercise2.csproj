@@ -353,6 +353,7 @@
     <Content Include="Views\客戶聯絡人\Details.cshtml" />
     <Content Include="Views\客戶聯絡人\Edit.cshtml" />
     <Content Include="Views\客戶聯絡人\Index.cshtml" />
+    <Content Include="Views\客戶聯絡人\List客戶聯絡人.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
