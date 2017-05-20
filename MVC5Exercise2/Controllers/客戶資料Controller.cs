@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using MVC5Exercise2.Models;
 using PagedList;
+using MVC5Exercise2.ActionFilters;
 
 namespace MVC5Exercise2.Controllers
 {
+    [ActionLog]
     public class 客戶資料Controller : Controller
     {
         //private CustomerEntities db = new CustomerEntities();
