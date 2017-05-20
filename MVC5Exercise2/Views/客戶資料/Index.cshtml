@@ -19,6 +19,7 @@
         @Html.Label("客戶分類")
         @Html.DropDownList("客戶分類"
           , new List<SelectListItem> {
+              new SelectListItem() {Text= "", Value= "" },
               new SelectListItem() {Text= "資訊服務類", Value= "資訊服務類" },
               new SelectListItem() {Text= "金融類", Value= "金融類" },
               new SelectListItem() {Text= "製造類", Value= "製造類" },
