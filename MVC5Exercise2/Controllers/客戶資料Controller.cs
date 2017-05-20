@@ -7,28 +7,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Exercise2.Models;
+using PagedList;
 
 namespace MVC5Exercise2.Controllers
 {
     public class 客戶資料Controller : Controller
     {
         //private CustomerEntities db = new CustomerEntities();
+        // 改用 Repository Pattern 管理所有新刪查改(CRUD)等功能 & 資料篩選的邏輯要寫在 Repository 的類別裡面
         客戶資料Repository repo = RepositoryHelper.Get客戶資料Repository();
 
-        // GET: 客戶資料
-        /// <summary>
-        /// 排序、搜尋與分頁(後端作法參考網址)
-        // https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
-        // http://www.aizhengli.com/entity-framework6-mvc5-started/111/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application.html
-        // 排序、搜尋與分頁(前端作法參考網址) ASP.NET MVC 使用 jQuery EasyUI DataGrid -排序(Sorting)
-        // http://kevintsengtw.blogspot.tw/2013/10/aspnet-mvc-jquery-easyui-datagrid_9.html
-        // http://kevintsengtw.blogspot.tw/2013/10/aspnet-mvc-jquery-easyui-datagrid_10.html
-        /// </summary>
-        /// <param name="sortOrder"></param>
-        /// <param name="客戶分類"></param>
-        /// <returns></returns>
-        public ActionResult Index(string sortOrder, string 客戶分類 = "")
+        // 設定每一頁筆數
+        private int pageSize = 3;
+    
+        public ActionResult Index(string sortOrder, string 客戶分類 = "", int page= 1)
         {
+            int currentPage = page < 1 ? 1 : page;
             IQueryable<客戶資料> data = null;
             if (string.IsNullOrEmpty(客戶分類))
             {
@@ -62,7 +56,10 @@ namespace MVC5Exercise2.Controllers
             }
             // *** 實作排序功能(點選同一欄位切換下一次搜尋條件，回傳給 View 紀錄下來) Begin ***
 
-            return View(data.ToList());
+            //return View(data.ToList());
+            var result = data.ToPagedList(currentPage, pageSize);
+            return View(result);
+            
         }
 
         /// <summary>
@@ -201,3 +198,18 @@ namespace MVC5Exercise2.Controllers
 
     }
 }
+
+
+/// 排序、搜尋與分頁(後端作法參考網址)
+// https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
+// http://www.aizhengli.com/entity-framework6-mvc5-started/111/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application.html
+// 排序、搜尋與分頁(前端作法參考網址) ASP.NET MVC 使用 jQuery EasyUI DataGrid -排序(Sorting)
+// http://kevintsengtw.blogspot.tw/2013/10/aspnet-mvc-jquery-easyui-datagrid_9.html
+// http://kevintsengtw.blogspot.tw/2013/10/aspnet-mvc-jquery-easyui-datagrid_10.html
+// ASP.NET MVC 資料分頁 - 使用 PagedList.Mvc *
+// http://kevintsengtw.blogspot.tw/2013/10/aspnet-mvc-pagedlistmvc.html
+// https://forums.asp.net/t/1825413.aspx?PagedList
+// ASP.NET MVC 資料分頁 - 使用 PagedList.Mvc：分頁列樣式
+// http://kevintsengtw.blogspot.tw/2013/10/aspnet-mvc-pagedlistmvc_17.html
+// ASP.NET MVC 資料分頁操作 - 使用 PagedList.Mvc ＠ GitHub  (All)
+// http://kevintsengtw.blogspot.tw/2014/10/aspnet-mvc-pagedlistmvc-github.html

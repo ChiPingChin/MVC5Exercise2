@@ -1,7 +1,13 @@
-﻿@model IEnumerable<MVC5Exercise2.Models.客戶資料>
+﻿@*@model IEnumerable<MVC5Exercise2.Models.客戶資料>*@
+@model PagedList.IPagedList<MVC5Exercise2.Models.客戶資料>
 
 @{
     ViewBag.Title = "Index";
+}
+
+@section styles
+{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
 }
 
 <h2>客戶資料</h2>
@@ -40,22 +46,22 @@
             @Html.ActionLink("統一編號", "Index", new { sortOrder = ViewBag.CNumberSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.電話)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().電話)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.傳真)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().傳真)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.地址)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().地址)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.是否已刪除)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().是否已刪除)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.客戶分類)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().客戶分類)
         </th>
         <th></th>
     </tr>
@@ -95,3 +101,6 @@
 }
 
 </table>
+
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
