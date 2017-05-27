@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Exercise2.Models;
+using MVC5Exercise2.Models.ViewModels;
 
 namespace MVC5Exercise2.Controllers
 {
@@ -14,20 +15,53 @@ namespace MVC5Exercise2.Controllers
     {
         private CustomerEntities db = new CustomerEntities();
 
-        // GET: 客戶聯絡人 
+        // GET: 客戶聯絡人 (支援批次更新功能 BatchUpdate)
         public ActionResult Index(string 職稱 = "")
         {     
             IEnumerable<客戶聯絡人> data = null;
             if (string.IsNullOrEmpty(職稱))
             {
-                data = db.客戶聯絡人.Include(c => c.客戶資料);
+                Get客戶聯絡人();
             }
             else
             {
                 data = db.客戶聯絡人.Where(c => c.職稱.ToUpper() == 職稱.ToUpper()).Include(c => c.客戶資料);
+                ViewData.Model = data;
             }
             
-            return View(data.ToList());
+            return View();
+        }
+
+        public ActionResult BatchUpdate()
+        {
+            Get客戶聯絡人();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult BatchUpdate(客戶聯絡人BatchUpdate[] items)
+        {
+            if (items != null && ModelState.IsValid)
+            {
+                foreach (var item in items)
+                {
+                    var cc = db.客戶聯絡人.Find(item.Id);
+                    cc.職稱 = item.職稱;
+                    cc.手機 = item.手機;
+                    cc.電話 = item.電話;
+                }
+                db.SaveChanges();
+                return RedirectToAction("BatchUpdate");
+            }
+            
+            Get客戶聯絡人();
+            return View();
+        }
+
+        private void Get客戶聯絡人()
+        {
+            var data = db.客戶聯絡人.Include(c => c.客戶資料);
+            ViewData.Model = data;
         }
 
         // GET: 客戶聯絡人/Details/5

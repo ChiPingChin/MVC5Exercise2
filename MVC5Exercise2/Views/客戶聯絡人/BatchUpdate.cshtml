@@ -1,0 +1,59 @@
+﻿@*此為套板後的某一個 Controller/Action 的 Index View 頁面，需加上兩個 section : breadcrumb(麵包屑導覽) *@
+@*@section breadcrumb
+{
+    <li><a href="@Url.Action("BatchUpdate","客戶聯絡人")">客戶聯絡人(BatchUpdate)</a></li>
+}*@
+
+@model IEnumerable<MVC5Exercise2.Models.客戶聯絡人>
+
+@{
+    ViewBag.Title = "BatchUpdate";
+}
+
+<h2>客戶聯絡人批次更新</h2>
+
+@using (Html.BeginForm("BatchUpdate", "客戶聯絡人", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.職稱)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.手機)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.電話)
+            </th>
+           
+        </tr>
+
+        @{
+            var items = Model.ToArray();
+        }
+
+        @for (int i = 0; i < items.Length; i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => items[i].Id)
+                    @Html.EditorFor(modelItem => items[i].職稱)
+                    @Html.ValidationMessageFor(modelItem => items[i].職稱)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => items[i].手機)
+                    @Html.ValidationMessageFor(modelItem => items[i].手機)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => items[i].電話)
+                    @Html.ValidationMessageFor(modelItem => items[i].電話)
+                </td>              
+            </tr>
+        }
+
+    </table>
+
+    <button>批次更新資料</button>
+
+}
+

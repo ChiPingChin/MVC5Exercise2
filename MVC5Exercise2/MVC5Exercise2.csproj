@@ -234,6 +234,7 @@
     <Compile Include="Models\RepositoryHelper.cs">
       <DependentUpon>IRepository.EF6..tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\客戶聯絡人BatchUpdate.cs" />
     <Compile Include="Models\客戶聯絡人.cs">
       <DependentUpon>CustomerModel.tt</DependentUpon>
     </Compile>
@@ -346,7 +347,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -381,7 +381,11 @@
     <Content Include="Views\客戶聯絡人\Edit.cshtml" />
     <Content Include="Views\客戶聯絡人\Index.cshtml" />
     <Content Include="Views\客戶聯絡人\List客戶聯絡人.cshtml" />
-    <Content Include="Views\Shared\_Layout_BK.cshtml" />
+    <Content Include="Views\Shared\_Layout_Original.cshtml" />
+    <Content Include="Views\客戶聯絡人\Index - Original.cshtml" />
+    <Content Include="Views\客戶聯絡人\BatchUpdate.cshtml" />
+    <Content Include="Views\Shared\_Layout - Template.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="css\" />

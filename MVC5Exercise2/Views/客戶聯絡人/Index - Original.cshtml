@@ -1,0 +1,101 @@
+﻿@*此為套板後的某一個 Controller/Action 的 Index View 頁面，需加上兩個 section : breadcrumb(麵包屑導覽) *@
+@section breadcrumb
+{
+    <li><a href="@Url.Action("Index","客戶聯絡人")">客戶聯絡人</a></li>
+}
+
+@model IEnumerable<MVC5Exercise2.Models.客戶聯絡人>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>客戶聯絡人</h2>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>查詢</legend>
+        @Html.Label("職稱")
+        @Html.TextBox("職稱")
+
+        <input type="submit" value="查詢" />
+    </fieldset>
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "客戶聯絡人",FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.職稱)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.姓名)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.手機)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.電話)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.是否已刪除)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.客戶資料.客戶名稱)
+            </th>
+            <th></th>
+        </tr>
+
+        @{
+            var items = Model.ToArray();
+        }
+
+        @for (int i = 0; i <items.Length; i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => items[i].Id)
+                    @Html.EditorFor(modelItem => items[i].職稱)
+                    @Html.ValidationMessageFor(modelItem => items[i].職稱)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].姓名)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].Email)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => items[i].手機)
+                    @Html.ValidationMessageFor(modelItem => items[i].手機)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => items[i].電話)
+                    @Html.ValidationMessageFor(modelItem => items[i].電話)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].是否已刪除)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].客戶資料.客戶名稱)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = items[i].Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = items[i].Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = items[i].Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <button>批次更新資料</button>
+}
