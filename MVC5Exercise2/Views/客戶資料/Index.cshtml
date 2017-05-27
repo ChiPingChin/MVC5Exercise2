@@ -34,80 +34,89 @@
           })
 
         <input type="submit" value="查詢" />
-    </fieldset>    
+    </fieldset>
 }
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @*@Html.DisplayNameFor(model => model.客戶名稱)*@
-            @*增加排序欄位*@
-            @Html.ActionLink("客戶名稱", "Index", new { sortOrder = ViewBag.CNameSortParm })
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.統一編號)*@
-            @*增加排序欄位*@
-            @Html.ActionLink("統一編號", "Index", new { sortOrder = ViewBag.CNumberSortParm })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().電話)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().傳真)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().地址)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().是否已刪除)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().客戶分類)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.客戶名稱)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.統一編號)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.電話)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.傳真)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.地址)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.是否已刪除)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.客戶分類)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+
+@using (Html.BeginForm("ExportToExcel", "客戶資料", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.客戶名稱)*@
+                @*增加排序欄位*@
+                @Html.ActionLink("客戶名稱", "Index", new { sortOrder = ViewBag.CNameSortParm })
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.統一編號)*@
+                @*增加排序欄位*@
+                @Html.ActionLink("統一編號", "Index", new { sortOrder = ViewBag.CNumberSortParm })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().電話)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().傳真)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().地址)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().是否已刪除)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().客戶分類)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.客戶名稱)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.統一編號)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.電話)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.傳真)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.地址)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.是否已刪除)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.客戶分類)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <hr />
+    <input type="submit" value="Export To Excel" class="button" />
+
 }
-
-</table>
-
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))

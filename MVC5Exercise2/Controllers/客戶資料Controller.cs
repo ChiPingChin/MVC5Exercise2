@@ -9,6 +9,10 @@ using System.Web.Mvc;
 using MVC5Exercise2.Models;
 using PagedList;
 using MVC5Exercise2.ActionFilters;
+using ClosedXML.Excel;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
 
 namespace MVC5Exercise2.Controllers
 {
@@ -62,6 +66,35 @@ namespace MVC5Exercise2.Controllers
             var result = data.ToPagedList(currentPage, pageSize);
             return View(result);
             
+        }
+
+        /// <summary>
+        /// 匯出 Excel File 
+        /// http://www.dotnet-tutorial.com/articles/mvc/export-data-in-excel-file-with-asp-net-mvc
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ExportToExcel()
+        {
+            var gv = new System.Web.UI.WebControls.GridView();
+            gv.DataSource = repo.Get列表所有客戶資料().ToList();
+            gv.DataBind();
+
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
+            Response.ContentType = "application/ms-excel";
+
+            Response.Charset = "";
+            StringWriter objStringWriter = new StringWriter();
+            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+
+            gv.RenderControl(objHtmlTextWriter);
+
+            Response.Output.Write(objStringWriter.ToString());
+            Response.Flush();
+            Response.End();
+
+            return View("Index");
         }
 
         /// <summary>
