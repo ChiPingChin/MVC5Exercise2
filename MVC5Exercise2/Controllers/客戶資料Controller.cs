@@ -143,8 +143,10 @@ namespace MVC5Exercise2.Controllers
                     MyMemoryStream.WriteTo(Response.OutputStream);
                     Response.Flush();
                     Response.End();
+                   // return File(MyMemoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                 }
             }
+            
             return RedirectToAction("Index", "客戶資料");
         }
 
