@@ -42,7 +42,8 @@
 </p>
 
 
-@using (Html.BeginForm("ExportToExcel", "客戶資料", FormMethod.Post))
+@*@using (Html.BeginForm("ExportToExcel", "客戶資料", FormMethod.Post))*@ 
+@using(Html.BeginForm("ExportToExcelWithClosedXML", "客戶資料", FormMethod.Post))
 {
     <table class="table">
         <tr>

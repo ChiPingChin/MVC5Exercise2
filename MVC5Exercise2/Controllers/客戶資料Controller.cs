@@ -13,33 +13,34 @@ using ClosedXML.Excel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using FastMember;
 
 namespace MVC5Exercise2.Controllers
 {
     [ActionLog]
     public class 客戶資料Controller : Controller
     {
-        //private CustomerEntities db = new CustomerEntities();
+        private CustomerEntities db = new CustomerEntities();
         // 改用 Repository Pattern 管理所有新刪查改(CRUD)等功能 & 資料篩選的邏輯要寫在 Repository 的類別裡面
         客戶資料Repository repo = RepositoryHelper.Get客戶資料Repository();
 
         // 設定每一頁筆數
         private int pageSize = 3;
-    
-        public ActionResult Index(string sortOrder, string 客戶分類 = "", int page= 1)
+
+        public ActionResult Index(string sortOrder, string 客戶分類 = "", int page = 1)
         {
             int currentPage = page < 1 ? 1 : page;
             IQueryable<客戶資料> data = null;
             if (string.IsNullOrEmpty(客戶分類))
             {
-                data = repo.Get列表所有客戶資料();                
+                data = repo.Get列表所有客戶資料();
             }
             else
             {
                 data = repo.Get列表所有客戶資料()
                     .Where(c => c.客戶分類.ToUpper() == 客戶分類.ToUpper());
             }
-            
+
             // *** 實作排序功能(點選同一欄位切換下一次搜尋條件，回傳給 View 紀錄下來) Begin ***
             // 先實作2個欄位排序：客戶名稱 & 統一編號
             ViewBag.CNameSortParm = String.IsNullOrEmpty(sortOrder) ? "cname_desc" : "";
@@ -65,7 +66,7 @@ namespace MVC5Exercise2.Controllers
             //return View(data.ToList());
             var result = data.ToPagedList(currentPage, pageSize);
             return View(result);
-            
+
         }
 
         /// <summary>
@@ -96,6 +97,58 @@ namespace MVC5Exercise2.Controllers
 
             return View("Index");
         }
+
+        /// <summary>
+        /// 匯出 Excel File (需先使用 NuGet 新增 ClosedXML + FastMember 兩個套件)
+        /// http://www.c-sharpcorner.com/UploadFile/rahul4_saxena/export-data-table-to-excel-in-Asp-Net-mvc-4/   ***
+        /// https://stackoverflow.com/questions/564366/convert-generic-list-enumerable-to-datatable              FastMember 套件
+        /// https://closedxml.codeplex.com/wikipage?title=Showcase&referringTitle=Documentation
+        /// https://closedxml.codeplex.com/wikipage?title=Basic%20Table&referringTitle=Documentation
+        /// http://blog.darkthread.net/post-2012-12-28-closedxml.aspx
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ExportToExcelWithClosedXML()
+        {
+            // 先取得 DB 中資料成為 IEnumerable<T> 型別
+            IEnumerable<客戶資料> data = db.客戶資料.ToList();
+
+            // 建立一個新的 DataTable
+            DataTable table = new DataTable();
+
+            // 使用 FastMember 套件的方法將 IEnumerable<T> 資料轉成 DataTable 餵給 ClosedXML 元件，以準備輸出 Excel File
+            using (var reader = ObjectReader.Create(data))  
+            {
+                table.Load(reader);
+            }
+
+            // 使用 ClosedXML 套件製作 Excel File (把 DataTable 資料餵給第一個 Worksheets)
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                // 新增一個頁籤，名叫 Sheet1，並將 DataTable 資料餵給他
+                wb.Worksheets.Add(table,"Sheet1");  
+
+                // 格式化資料呈現
+                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wb.Style.Font.Bold = true;
+
+                Response.Clear();
+                Response.Buffer = true;
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment;filename= EmployeeReport.xlsx");
+
+                using (MemoryStream MyMemoryStream = new MemoryStream())
+                {
+                    wb.SaveAs(MyMemoryStream);
+                    MyMemoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+                }
+            }
+            return RedirectToAction("Index", "客戶資料");
+        }
+
+
 
         /// <summary>
         /// 後端回傳 Json 格式資料
@@ -185,7 +238,7 @@ namespace MVC5Exercise2.Controllers
         public ActionResult Edit(int id, FormCollection form)
         {
             客戶資料 客戶資料 = repo.Get單筆客戶資料ByClientId(id);
-            if (TryUpdateModel(客戶資料,new string[] { "密碼", "電話", "傳真", "地址", "Email" }))
+            if (TryUpdateModel(客戶資料, new string[] { "密碼", "電話", "傳真", "地址", "Email" }))
             {
                 repo.UnitOfWork.Commit();
 
