@@ -1,4 +1,9 @@
-﻿@*@model IEnumerable<MVC5Exercise2.Models.客戶資料>*@
+﻿@section breadcrumb
+{
+    <li><a href="@Url.Action("Index","客戶資料")">客戶資料</a></li>
+}
+
+@*@model IEnumerable<MVC5Exercise2.Models.客戶資料>*@
 @model PagedList.IPagedList<MVC5Exercise2.Models.客戶資料>
 
 @{

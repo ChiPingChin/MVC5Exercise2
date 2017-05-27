@@ -1,4 +1,9 @@
-﻿@model IEnumerable<MVC5Exercise2.Models.客戶聯絡人>
+﻿@section breadcrumb
+{
+    <li><a href="@Url.Action("Index","客戶聯絡人")">客戶聯絡人</a></li>
+}
+
+@model IEnumerable<MVC5Exercise2.Models.客戶聯絡人>
 
 @{
     ViewBag.Title = "Index";

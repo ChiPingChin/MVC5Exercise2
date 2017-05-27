@@ -269,13 +269,23 @@
     <Content Include="App_Data\客戶資料_log.ldf">
       <DependentUpon>客戶資料.mdf</DependentUpon>
     </Content>
+    <Content Include="calendar.html" />
+    <Content Include="chart.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
+    <Content Include="file-manager.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="form.html" />
+    <Content Include="gallery.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="icon.html" />
+    <Content Include="index - Copy.html" />
+    <Content Include="index.html" />
+    <Content Include="login.html" />
+    <Content Include="messages.html" />
     <Content Include="Models\CustomerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CustomerModel.edmx</DependentUpon>
@@ -296,6 +306,7 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="widgets.html" />
     <EntityDeploy Include="Models\CustomerModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CustomerModel.Designer.cs</LastGenOutput>
@@ -303,6 +314,7 @@
     <Content Include="Models\CustomerModel.edmx.diagram">
       <DependentUpon>CustomerModel.edmx</DependentUpon>
     </Content>
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -315,6 +327,13 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="submenu.html" />
+    <Content Include="submenu2.html" />
+    <Content Include="submenu3.html" />
+    <Content Include="table.html" />
+    <Content Include="tasks.html" />
+    <Content Include="typography.html" />
+    <Content Include="ui.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -362,8 +381,14 @@
     <Content Include="Views\客戶聯絡人\Edit.cshtml" />
     <Content Include="Views\客戶聯絡人\Index.cshtml" />
     <Content Include="Views\客戶聯絡人\List客戶聯絡人.cshtml" />
+    <Content Include="Views\Shared\_Layout_BK.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="css\" />
+    <Folder Include="font\" />
+    <Folder Include="img\" />
+    <Folder Include="js\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
