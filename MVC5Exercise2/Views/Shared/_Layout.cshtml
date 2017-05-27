@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@*此為套版後的全站 _Layout.cshtml Template，內有需動態塞入的  RenderSection() - styles(PageList.css),breadcrumb(導覽用麵包屑) 與 RenderBody() 需實作於各 Action 的 View 頁面*@
+@*此 Template 中必須調整左方 Menu Link 文字與連結 與左上方系統 Title Link 文字與連結*@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -13,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- end: Mobile Specific -->
     <!-- start: CSS -->
+    @*CSS 檔案的路徑必須和實際一致，可使用相對路徑*@
     <link id="bootstrap-style" href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link id="base-style" href="/css/style.css" rel="stylesheet">
@@ -28,7 +31,8 @@
         <link id="ie9style" href="/css/ie9.css" rel="stylesheet">
     <![endif]-->
     <!-- start: Favicon -->
-    <link rel="shortcut icon" href="//img/favicon.ico">
+    @*IMG 檔案的路徑必須和實際一致，可使用相對路徑*@
+    <link rel="shortcut icon" href="/img/favicon.ico">
     <!-- end: Favicon -->
 
     @RenderSection("styles",false)
@@ -45,6 +49,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
+                @*左上角系統名稱和首頁連結*@
                 <a class="brand" href="@Url.Action("Index","客戶資料")"><span>客戶系統</span></a>
 
                 <!-- start: Header Menu -->
@@ -327,6 +332,7 @@
             <div id="sidebar-left" class="span2">
                 <div class="nav-collapse sidebar-nav">
                     <ul class="nav nav-tabs nav-stacked main-menu">
+                        @*左方 Menu 的文字敘述與連結，請改為連到正確的 Action/Controller*@
                         <li><a href="@Url.Action("Index","客戶資料")"><i class="icon-bar-chart"></i><span class="hidden-tablet"> 客戶資料 </span></a></li>
                         <li><a href="@Url.Action("Index","客戶聯絡人")"><i class="icon-envelope"></i><span class="hidden-tablet"> 客戶聯絡人 </span></a></li>
                         <li><a href="tasks.html"><i class="icon-tasks"></i><span class="hidden-tablet"> Tasks</span></a></li>
@@ -368,16 +374,20 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home"></i>
+                        @*----------首頁麵包屑文字與超連結需調整---------*@
                         <a href="@Url.Action("Index","客戶資料")">Home</a>
+                        @*----------首頁麵包屑文字與超連結需調整---------*@
                         <i class="icon-angle-right"></i>
                     </li>
+                    @*---------此段內部會放個別 View 上方導覽用麵包屑---------------------*@
                     @*<li><a href="#">Dashboard</a></li>*@
                     @RenderSection("breadcrumb",false)
+                    @*---------此段內部會放個別 View 上方導覽用麵包屑---------------------*@
                 </ul>
              
-            @*------------------------------*@
+            @*---------此段內部會放個別 View Page 的內容---------------------*@
             @RenderBody()
-            @*------------------------------*@
+            @*---------此段內部會放個別 View Page 的內容---------------------*@
 
             </div><!--/.fluid-container-->
             <!-- end: Content -->
@@ -407,7 +417,7 @@
         </p>
     </footer>
 
-    <!-- start: JavaScript-->
+    <!-- start: JavaScript - JS 檔案的路徑必須和實際一致，可使用相對路徑 -->
     <script src="/js/jquery-1.9.1.min.js"></script>
     <script src="/js/jquery-migrate-1.0.0.min.js"></script>
 
