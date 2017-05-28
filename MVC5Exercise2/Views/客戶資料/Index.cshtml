@@ -38,12 +38,23 @@
 }
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*多國語系參考網址*@
+    @*http://yhwu912.blogspot.tw/2014/08/mvc.html
+      https://dotblogs.com.tw/rainmaker/archive/2011/08/21/33717.aspx
+      http://altoncsharp.blogspot.tw/2016/12/asp-net-mvctools-resxmanager.html *@
+
+    @* .Net程式依語系取得資源內容 - 在 View 中套用多國屬性設定值*@
+    @Html.ActionLink(@MVC5Exercise2.App_GlobalResources.Resource.Create, "Create")
+
+    <br />
+
+    @*測試多國語系 - .Net程式依語系取得資源內容 - 從 Controller/Action 套用多國屬性設定值後在 View 中呈現*@
+    @ViewBag.Query
 </p>
 
 
-@*@using (Html.BeginForm("ExportToExcel", "客戶資料", FormMethod.Post))*@ 
-@using(Html.BeginForm("ExportToExcelWithClosedXML", "客戶資料", FormMethod.Post))
+@*@using (Html.BeginForm("ExportToExcel", "客戶資料", FormMethod.Post))*@
+@using (Html.BeginForm("ExportToExcelWithClosedXML", "客戶資料", FormMethod.Post))
 {
     <table class="table">
         <tr>
@@ -106,9 +117,9 @@
                     @Html.DisplayFor(modelItem => item.客戶分類)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
         }

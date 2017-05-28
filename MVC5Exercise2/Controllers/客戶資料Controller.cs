@@ -29,6 +29,9 @@ namespace MVC5Exercise2.Controllers
 
         public ActionResult Index(string sortOrder, string 客戶分類 = "", int page = 1)
         {
+            // 測試多國語系 - .Net程式依語系取得資源內容 - 在 Controller/Action 套用多國屬性設定值
+            ViewBag.Query = App_GlobalResources.Resource.Query;
+
             int currentPage = page < 1 ? 1 : page;
             IQueryable<客戶資料> data = null;
             if (string.IsNullOrEmpty(客戶分類))
