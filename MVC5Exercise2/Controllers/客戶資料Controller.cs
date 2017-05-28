@@ -101,8 +101,9 @@ namespace MVC5Exercise2.Controllers
             return View("Index");
         }
 
+
         /// <summary>
-        /// 匯出 Excel File (需先使用 NuGet 新增 ClosedXML + FastMember 兩個套件)
+        /// 匯出 Excel File (需先使用 NuGet 新增 ClosedXML + FastMember 兩個套件 - 回傳 FileStreamResult)
         /// http://www.c-sharpcorner.com/UploadFile/rahul4_saxena/export-data-table-to-excel-in-Asp-Net-mvc-4/   ***
         /// https://stackoverflow.com/questions/564366/convert-generic-list-enumerable-to-datatable              FastMember 套件
         /// https://closedxml.codeplex.com/wikipage?title=Showcase&referringTitle=Documentation
@@ -112,45 +113,71 @@ namespace MVC5Exercise2.Controllers
         /// <returns></returns>
         public ActionResult ExportToExcelWithClosedXML()
         {
-            // 先取得 DB 中資料成為 IEnumerable<T> 型別
-            IEnumerable<客戶資料> data = db.客戶資料.ToList();
+            // 先取得 DB 中資料成為 IEnumerable<T> 型別 (自訂輸出欄位)
+            var data = db.客戶資料.Select(c => new
+            {
+                客戶名稱 = c.客戶名稱,
+                客戶分類 = c.客戶分類,
+                統一編號 = c.統一編號,
+                電話 = c.電話,
+                傳真 = c.傳真,
+                地址 = c.地址,
+                Email = c.Email
+            });
 
             // 建立一個新的 DataTable
             DataTable table = new DataTable();
 
             // 使用 FastMember 套件的方法將 IEnumerable<T> 資料轉成 DataTable 餵給 ClosedXML 元件，以準備輸出 Excel File
-            using (var reader = ObjectReader.Create(data))  
+            using (var reader = ObjectReader.Create(data))
             {
                 table.Load(reader);
             }
 
             // 使用 ClosedXML 套件製作 Excel File (把 DataTable 資料餵給第一個 Worksheets)
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                // 新增一個頁籤，名叫 Sheet1，並將 DataTable 資料餵給他
-                wb.Worksheets.Add(table,"Sheet1");  
+            XLWorkbook wb = new XLWorkbook();
+            // 新增一個頁籤，名叫 Sheet1，並將 DataTable 資料餵給他
+            var ws = wb.Worksheets.Add(table, "Sheet1");
 
-                // 格式化資料呈現
-                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                wb.Style.Font.Bold = true;
+            // 格式化資料呈現
+            wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            wb.Style.Font.Bold = true;
+            // Column Auto Adjust
+            ws.Columns().AdjustToContents();
 
-                Response.Clear();
-                Response.Buffer = true;
-                Response.Charset = "";
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;filename= EmployeeReport.xlsx");
+            // Declare file-type(content-type)
+            string fileType = @"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-                using (MemoryStream MyMemoryStream = new MemoryStream())
-                {
-                    wb.SaveAs(MyMemoryStream);
-                    MyMemoryStream.WriteTo(Response.OutputStream);
-                    Response.Flush();
-                    Response.End();
-                   // return File(MyMemoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                }
-            }
-            
-            return RedirectToAction("Index", "客戶資料");
+            // 建立一個 MemoryStream 準備放 Excel 內容的輸出
+            MemoryStream MyMemoryStream = new MemoryStream();
+            wb.SaveAs(MyMemoryStream);
+            wb.Dispose();  // 釋放資源
+            MyMemoryStream.Position = 0;
+            // 將 MemoryStream Excel 檔案內容回傳出檔案(FileStreamResult)
+            return File(MyMemoryStream, fileType, "CustomerListExp.xlsx");
+
+            //return RedirectToAction("Index", "客戶資料");
+        }
+
+
+        /// <summary>
+        /// 檔案下載作業(僅供參考)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DownloadFile2()
+        {
+            //我要下載的檔案位置
+            string filePath = Server.MapPath("~/FileUploads/IMG20170424105915.zip");
+            string fileType = @"application/zip";
+
+            //取得檔案名稱 (準備給之後下載時的檔案預設命名)
+            string fileName = Path.GetFileName(filePath);
+
+            // 讀成串流
+            Stream iStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            // 回傳出檔案
+            return File(iStream, fileType, fileName);
         }
 
 
